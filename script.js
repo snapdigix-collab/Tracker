@@ -3,7 +3,7 @@ const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:
 const today=()=>new Date().toISOString().slice(0,10);
 const monthKey=d=>String(d||'').slice(0,7);
 const uid=prefix=>prefix+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
-const API_URL='https://script.google.com/macros/s/AKfycbzONVwQY3yPEQpuoM-ffAq-wEaYcViPzqAPOTifS3vBPSoSwwQFt-ihdmDHsKkk4J-zcA/exec';
+const API_URL='https://script.google.com/macros/s/AKfycbyFKX56E7KekuUa0F4fTO5DuOe9T39mdDf2fJEE-Pl0P4Zpbt35JwK75GlXVHjuSYdfhQ/exec';
 let role='Admin',currentUser='Admin User',currentUserId='',activePage='dashboard',pendingTab='income',editing=null,modalKind='',cashflowChart,sourceChart,reportBarChart,reportPieChart;
 const demoSeed={income:[
 {id:'INC-1048',date:today(),amount:12500,paymentMode:'UPI',paymentStatus:'Paid',customerName:'Walk-in sales',entryBy:'Admin User',createdAt:Date.now()-1000},
