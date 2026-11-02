@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Tracker | Income & Expense</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="loginView" class="login-shell">
+    <div class="login-art">
+      <div class="brand-lockup"><span class="brand-mark">ST</span><span>Shop<span class="brand-accent">Tracker</span></span></div>
+      <div class="login-art-copy">
+        <span class="eyebrow">SHOP MANAGEMENT</span>
+        <h1>Know your numbers.<br><span>Grow with confidence.</span></h1>
+        <p>Track income, expenses, pending payments and your team — all in one place.</p>
+        <div class="login-art-stat"><div class="stat-icon">↗</div><div><strong>Simple daily tracking</strong><small>Clear records. Better decisions.</small></div></div>
+      </div>
+      <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+    </div>
+    <div class="login-panel">
+      <div class="login-card">
+        <div class="mobile-brand brand-lockup"><span class="brand-mark">ST</span><span>Shop<span class="brand-accent">Tracker</span></span></div>
+        <span class="eyebrow">WELCOME BACK</span>
+        <h2>Sign in to your account</h2>
+        <p class="muted">Enter your details to access the tracker.</p>
+        <form id="loginForm">
+          <label for="loginUsername">Username</label>
+          <div class="input-wrap"><span class="input-symbol">◎</span><input id="loginUsername" autocomplete="username" placeholder="Enter username" required></div>
+          <label for="loginPassword">Password</label>
+          <div class="input-wrap"><span class="input-symbol">▣</span><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter password" required><button class="show-password" type="button" id="togglePassword">Show</button></div>
+          <label for="demoRole">Preview role</label>
+          <select id="demoRole"><option value="Admin">Admin</option><option value="Employee">Employee</option></select>
+          <button class="btn btn-primary btn-full" type="submit">Sign in <span>→</span></button>
+          <p class="login-hint">UI preview: any username/password will open the selected role.</p>
+        </form>
+      </div>
+      <div class="login-footer">© 2026 Shop Tracker <span>Secure shop management</span></div>
+    </div>
+  </div>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand brand-lockup"><span class="brand-mark">ST</span><span>Shop<span class="brand-accent">Tracker</span></span></div>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" id="sideNav">
+        <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span><span>Dashboard</span></button>
+        <button class="nav-item" data-page="income"><span class="nav-icon">↙</span><span>Income</span><span class="nav-count" id="incomeNavCount">0</span></button>
+        <button class="nav-item" data-page="expense"><span class="nav-icon">↗</span><span>Expenses</span></button>
+        <button class="nav-item" data-page="pending"><span class="nav-icon">◷</span><span>Pending</span><span class="nav-count orange-count" id="pendingNavCount">0</span></button>
+        <div class="nav-divider admin-only"></div>
+        <div class="workspace-label admin-only">ADMIN</div>
+        <button class="nav-item admin-only" data-page="reports"><span class="nav-icon">▤</span><span>Reports</span></button>
+        <button class="nav-item admin-only" data-page="employees"><span class="nav-icon">♙</span><span>Employees</span></button>
+        <button class="nav-item admin-only" data-page="attendance"><span class="nav-icon">✓</span><span>Attendance</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">?</div><strong>Need help?</strong><p>Reach out to your administrator for support.</p></div>
+        <button class="profile-row" id="profileButton"><span class="avatar" id="profileAvatar">AD</span><span class="profile-info"><strong id="profileName">Admin User</strong><small id="profileRole">Administrator</small></span><span class="profile-more">•••</span></button>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="breadcrumbTitle">Dashboard</strong></div>
+        <div class="topbar-actions"><div class="today-chip"><span>◷</span><span id="todayLabel"></span></div><button class="icon-button notification-button" aria-label="Notifications">♧<i></i></button><div class="topbar-avatar" id="topAvatar">AD</div></div>
+      </header>
+
+      <main class="page-content">
+        <section class="page-section active" id="page-dashboard">
+          <div class="page-heading"><div><span class="eyebrow">OVERVIEW</span><h1>Good day, <span id="welcomeName">Admin</span> 👋</h1><p>Here’s what’s happening with your shop today.</p></div><div class="heading-actions"><select id="dashboardPeriod" class="select-compact"><option value="month">This month</option><option value="today">Today</option><option value="year">This year</option></select><button class="btn btn-primary" id="quickIncome">＋ Add income</button></div></div>
+          <div class="summary-grid">
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Total Income</span><span class="summary-icon income-icon">↙</span></div><div class="summary-value" id="dashIncome">₹0</div><div class="summary-foot"><span class="trend trend-green" id="incomeTrend">↑ 0%</span><span>vs previous month</span></div><div class="card-accent income-accent"></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Total Expenses</span><span class="summary-icon expense-icon">↗</span></div><div class="summary-value" id="dashExpense">₹0</div><div class="summary-foot"><span class="trend trend-red" id="expenseTrend">↑ 0%</span><span>vs previous month</span></div><div class="card-accent expense-accent"></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Net Balance</span><span class="summary-icon balance-icon">₹</span></div><div class="summary-value" id="dashBalance">₹0</div><div class="summary-foot"><span class="trend trend-neutral">Current period</span><span>income minus expenses</span></div><div class="card-accent balance-accent"></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Pending Income</span><span class="summary-icon pending-icon">◷</span></div><div class="summary-value" id="dashPending">₹0</div><div class="summary-foot"><span class="trend trend-orange" id="pendingCountText">0 entries</span><span>awaiting collection</span></div><div class="card-accent pending-accent"></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel chart-panel"><div class="panel-heading"><div><h3>Income vs Expenses</h3><p>Monthly cash flow overview</p></div><span class="chart-legend"><i class="legend-dot green-dot"></i>Income <i class="legend-dot red-dot"></i>Expense</span></div><div class="chart-wrap"><canvas id="cashflowChart"></canvas></div></article>
+            <article class="panel"><div class="panel-heading"><div><h3>Income Sources</h3><p>Where your income comes from</p></div><button class="text-button" data-go="reports">View report →</button></div><div class="source-chart-wrap"><canvas id="sourceChart"></canvas></div><div class="source-legend" id="sourceLegend"></div></article>
+          </div>
+          <article class="panel recent-panel"><div class="panel-heading"><div><h3>Recent transactions</h3><p>Your latest income and expense entries</p></div><button class="text-button" data-go="income">View all →</button></div><div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Date</th><th>Category / Purpose</th><th>Payment</th><th>Amount</th></tr></thead><tbody id="recentTable"></tbody></table></div></article>
+        </section>
+
+        <section class="page-section" id="page-income">
+          <div class="page-heading"><div><span class="eyebrow">TRANSACTIONS</span><h1>Income</h1><p>Record and manage money received by your shop.</p></div><button class="btn btn-primary" id="addIncomeBtn">＋ Add income</button></div>
+          <div class="mini-summary-row"><div class="mini-summary"><span>Total income</span><strong id="incomePageTotal">₹0</strong></div><div class="mini-summary"><span>Paid</span><strong class="text-green" id="incomePaidTotal">₹0</strong></div><div class="mini-summary"><span>Unpaid</span><strong class="text-orange" id="incomeUnpaidTotal">₹0</strong></div></div>
+          <div class="panel data-panel"><div class="table-toolbar"><div class="search-box"><span>⌕</span><input id="incomeSearch" placeholder="Search customer, entry ID..."></div><div class="toolbar-filters"><input type="date" id="incomeDateFilter" aria-label="Filter date"><select id="incomeStatusFilter"><option value="">All status</option><option>Paid</option><option>Unpaid</option></select><button class="btn btn-outline" id="clearIncomeFilters">Reset</button></div></div><div class="table-wrap"><table><thead><tr><th>Entry ID</th><th>Date</th><th>Customer</th><th>Payment mode</th><th>Status</th><th>Entry by</th><th>Amount</th><th>Actions</th></tr></thead><tbody id="incomeTable"></tbody></table></div><div class="table-footer"><span id="incomeTableCount">0 entries</span><span>Newest entries first</span></div></div>
+        </section>
+
+        <section class="page-section" id="page-expense">
+          <div class="page-heading"><div><span class="eyebrow">TRANSACTIONS</span><h1>Expenses</h1><p>Keep track of shop spending and payments due.</p></div><button class="btn btn-primary" id="addExpenseBtn">＋ Add expense</button></div>
+          <div class="mini-summary-row"><div class="mini-summary"><span>Total expenses</span><strong id="expensePageTotal">₹0</strong></div><div class="mini-summary"><span>Paid</span><strong class="text-green" id="expensePaidTotal">₹0</strong></div><div class="mini-summary"><span>Unpaid</span><strong class="text-red" id="expenseUnpaidTotal">₹0</strong></div></div>
+          <div class="panel data-panel"><div class="table-toolbar"><div class="search-box"><span>⌕</span><input id="expenseSearch" placeholder="Search purpose, entry ID..."></div><div class="toolbar-filters"><input type="date" id="expenseDateFilter" aria-label="Filter date"><select id="expenseStatusFilter"><option value="">All status</option><option>Paid</option><option>Unpaid</option></select><button class="btn btn-outline" id="clearExpenseFilters">Reset</button></div></div><div class="table-wrap"><table><thead><tr><th>Entry ID</th><th>Date</th><th>Purpose</th><th>Payment mode</th><th>Status</th><th>Entry by</th><th>Amount</th><th>Actions</th></tr></thead><tbody id="expenseTable"></tbody></table></div><div class="table-footer"><span id="expenseTableCount">0 entries</span><span>Newest entries first</span></div></div>
+        </section>
+
+        <section class="page-section" id="page-pending">
+          <div class="page-heading"><div><span class="eyebrow">PAYMENT FOLLOW-UP</span><h1>Pending payments</h1><p>Track money to collect and payments to make.</p></div></div>
+          <div class="pending-tabs"><button class="pending-tab active" data-pending-tab="income">Pending income <span id="pendingIncomeBadge">0</span></button><button class="pending-tab" data-pending-tab="expense">Pending expenses <span id="pendingExpenseBadge">0</span></button></div>
+          <div class="mini-summary-row"><div class="mini-summary"><span>To collect</span><strong class="text-orange" id="pendingIncomeTotal">₹0</strong></div><div class="mini-summary"><span>To pay</span><strong class="text-red" id="pendingExpenseTotal">₹0</strong></div><div class="mini-summary"><span>Net pending</span><strong id="pendingNetTotal">₹0</strong></div></div>
+          <div class="panel data-panel"><div class="table-toolbar"><div class="search-box"><span>⌕</span><input id="pendingSearch" placeholder="Search customer or purpose..."></div><span class="toolbar-note">Unpaid entries only</span></div><div class="table-wrap"><table><thead id="pendingHead"></thead><tbody id="pendingTable"></tbody></table></div><div class="table-footer"><span id="pendingCount">0 entries</span><span>Newest entries first</span></div></div>
+        </section>
+
+        <section class="page-section" id="page-reports">
+          <div class="page-heading"><div><span class="eyebrow">ANALYTICS</span><h1>Reports</h1><p>Understand your shop’s financial performance.</p></div><div class="heading-actions"><select id="reportMonth" class="select-compact"></select><button class="btn btn-outline" id="exportReport">↓ Export CSV</button></div></div>
+          <div class="summary-grid report-summary"><article class="summary-card"><div class="summary-top"><span class="summary-label">Income</span><span class="summary-icon income-icon">↙</span></div><div class="summary-value" id="reportIncome">₹0</div><div class="summary-foot"><span class="trend trend-green">Selected month</span></div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Expenses</span><span class="summary-icon expense-icon">↗</span></div><div class="summary-value" id="reportExpense">₹0</div><div class="summary-foot"><span class="trend trend-red">Selected month</span></div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Net balance</span><span class="summary-icon balance-icon">₹</span></div><div class="summary-value" id="reportBalance">₹0</div><div class="summary-foot"><span class="trend trend-neutral">Income − expense</span></div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Pending</span><span class="summary-icon pending-icon">◷</span></div><div class="summary-value" id="reportPending">₹0</div><div class="summary-foot"><span class="trend trend-orange">Outstanding</span></div></article></div>
+          <div class="dashboard-grid"><article class="panel chart-panel"><div class="panel-heading"><div><h3>Monthly comparison</h3><p>Income and expenses by month</p></div></div><div class="chart-wrap"><canvas id="reportBarChart"></canvas></div></article><article class="panel chart-panel"><div class="panel-heading"><div><h3>Income vs expense</h3><p>Selected month breakdown</p></div></div><div class="source-chart-wrap"><canvas id="reportPieChart"></canvas></div><div class="source-legend"><span><i class="legend-dot green-dot"></i>Income</span><span><i class="legend-dot red-dot"></i>Expenses</span></div></article></div>
+          <article class="panel comparison-panel"><div class="panel-heading"><div><h3>Previous month vs current month</h3><p>Quick performance comparison</p></div></div><div class="comparison-grid" id="comparisonGrid"></div></article>
+        </section>
+
+        <section class="page-section" id="page-employees">
+          <div class="page-heading"><div><span class="eyebrow">TEAM MANAGEMENT</span><h1>Employees</h1><p>Manage staff access and employee details.</p></div><button class="btn btn-primary" id="addEmployeeBtn">＋ Add employee</button></div>
+          <div class="mini-summary-row"><div class="mini-summary"><span>Total employees</span><strong id="employeeTotal">0</strong></div><div class="mini-summary"><span>Active</span><strong class="text-green" id="employeeActive">0</strong></div><div class="mini-summary"><span>Inactive</span><strong id="employeeInactive">0</strong></div></div>
+          <div class="panel data-panel"><div class="table-toolbar"><div class="search-box"><span>⌕</span><input id="employeeSearch" placeholder="Search employee..."></div></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Username</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="employeeTable"></tbody></table></div></div>
+        </section>
+
+        <section class="page-section" id="page-attendance">
+          <div class="page-heading"><div><span class="eyebrow">TEAM MANAGEMENT</span><h1>Attendance</h1><p>Record and review employee attendance.</p></div><button class="btn btn-primary" id="markAttendanceBtn">＋ Mark attendance</button></div>
+          <div class="mini-summary-row"><div class="mini-summary"><span>Present today</span><strong class="text-green" id="presentToday">0</strong></div><div class="mini-summary"><span>Absent today</span><strong class="text-red" id="absentToday">0</strong></div><div class="mini-summary"><span>On leave</span><strong id="leaveToday">0</strong></div></div>
+          <div class="panel data-panel"><div class="table-toolbar"><div class="search-box"><span>⌕</span><input id="attendanceSearch" placeholder="Search employee..."></div><div class="toolbar-filters"><input type="date" id="attendanceDateFilter"><button class="btn btn-outline" id="todayAttendance">Today</button></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Status</th><th>Remarks</th><th>Marked by</th><th>Actions</th></tr></thead><tbody id="attendanceTable"></tbody></table></div></div>
+        </section>
+      </main>
+      <footer class="app-footer"><span>Shop Tracker <span class="footer-dot">•</span> Financial workspace</span><span>Prototype UI · Data stored locally in this preview</span></footer>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><span class="eyebrow" id="modalEyebrow">NEW ENTRY</span><h2 id="modalTitle">Add income</h2></div><button class="modal-close" id="closeModal" aria-label="Close">×</button></div>
+      <form id="entryForm"><div class="modal-body" id="modalBody"></div><div class="modal-actions"><button type="button" class="btn btn-outline" id="cancelModal">Cancel</button><button type="submit" class="btn btn-primary" id="saveModal">Save entry</button></div></form>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
