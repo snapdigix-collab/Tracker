@@ -4,7 +4,7 @@ const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMon
 const monthKey=d=>String(d||'').slice(0,7);
 const localMonthKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
 const uid=prefix=>prefix+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
-const API_URL='https://script.google.com/macros/s/AKfycbyFKX56E7KekuUa0F4fTO5DuOe9T39mdDf2fJEE-Pl0P4Zpbt35JwK75GlXVHjuSYdfhQ/exec';
+const API_URL='https://script.google.com/macros/s/AKfycbzp8snAD1M-qtDK5VUcGBdhHCWTPIa_jgAaaXbVKC7UmAN-RldOZS2mnM0hD86xa5aUqQ/exec';
 let role='Admin',currentUser='Admin User',currentUserId='',activePage='dashboard',pendingTab='income',editing=null,modalKind='',cashflowChart,sourceChart,reportBarChart,reportPieChart;
 const demoSeed={income:[
 {id:'INC-1048',date:today(),amount:12500,paymentMode:'UPI',paymentStatus:'Paid',customerName:'Walk-in sales',entryBy:'Admin User',createdAt:Date.now()-1000},
